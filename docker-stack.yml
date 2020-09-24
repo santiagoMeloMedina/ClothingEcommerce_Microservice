@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+  product_database:
+    image: product_database:latest
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    ports:
+      - '4220:3306'
+    networks:
+      - hs
+  
+  product_app:
+    image: product_app:latest
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    environment:
+      - IP=0.0.0.0
+      - PORT=4200
+    ports:
+      - '4200:4200'
+    networks:
+      - hs
+
+  product_nginx:
+    image: product_nginx
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    ports:
+      - '4210:4210'
+    networks:
+      - hs
+
+networks:
+  hs:
+    external: true

@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  product_database:
+    build: .
+    container_name: product_database
+    ports:
+      - '4220:3306'
+    expose:
+      - '4220'
+    networks:
+      - hs
+
+networks:
+  hs:
+    external: true
